@@ -1,0 +1,40 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<main id="main">
+    <header id="book-header">
+        <h1>Books</h1>
+        <h3 style = "text-align:center;"> Take a scroll through our library of books!</h3>
+        <br>
+        <div style="float:left;padding-top:10px">
+        {% for book in books %}
+            <book class="book" style=";padding-top:10px">
+            <div style="display: flex;align-items: center;justify-content: center">
+                <div style="float: left">
+                    <img src="{{ book.cover_url }} " style="max-width: 300px" alt="Book Cover">
+                    <br>
+                    <br>
+                    <br>
+                </div>
+
+            <div style="padding-left: 20px;">
+
+                <h2>{{book.title}}</h2>
+                <h3 style="float:left">Author(s):
+                 {% for author in book.authors %}
+                     {{ author.full_name }}, &nbsp </h3>
+                 {% endfor %}
+{#                <h3>Published By: {{book.publisher.name}} </h3>#}
+                <h3> Release Year: {{book.release_year}} </h3>
+                <p style="padding-top: 20px">{{book.description}}</p>
+                <br>
+                <br>
+                <br>
+            </div>
+        </div>
+
+             {% endfor %}
+        </div>
+    </header>
+</main>
+{% endblock %}

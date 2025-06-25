@@ -1,0 +1,35 @@
+
+<nav id="nav">
+  <img id="logo" src="{{ url_for('static', filename='bookLogo.png') }}" />
+
+
+  <h2 id="nav-header">
+    {% if 'user_name' in session %} Hello, {{ session['user_name'] }} {%
+    endif %}
+  </h2>
+  <a class="btn-nav" href="{{ url_for('home_bp.home') }}">Home</a>
+  <a class="btn-nav" href="{{ url_for('authentication_bp.register') }}">Register</a>
+  <a class="btn-nav" href="{{ url_for('authentication_bp.login') }}">Login</a>
+  <a class="btn-nav" href="{{ url_for('authentication_bp.logout') }}">Logout</a>
+
+  <br>
+
+
+
+  <div>
+    <br>
+    <h3 id="sub-nav-header"> Browse by: </h3>
+      <a class="btn-nav" style="cursor: pointer;" href={{ url_for('search_bp.search') }}>Search by Title</a>
+      <br>
+      <a class="btn-nav" style="cursor: pointer;" href="{{ url_for('news_bp.browse_books') }}">Release Year</a>
+      <br>
+    <a class="btn-nav" style="cursor: pointer;" href="{{ url_for('all_bp.browse_all_books') }}">Browse All Books</a>
+
+
+
+  </div>
+
+  <div id="nav-footer">
+    COMPSCI 235 Software Development Methodologies
+  </div>
+</nav>

@@ -1,0 +1,74 @@
+{% extends 'layout.html' %}
+{% block content %}
+<main id="search">
+    <header id="book-header">
+        <h1>{{ title }}</h1>
+
+
+    </header>
+
+    <div class="search-body" >
+
+        <form method="POST" action="search">
+            {{ form.csrf_token }} <!-- Need to include this token - Flask WTForms requires it. -->
+            {{ form.title_search }}
+            {{ form.submit }}
+
+            <br>
+
+        </form>
+
+        {%  if returnlength ==0%}
+            <h1>{{ results }}</h1>
+        {% else %}
+            <div style="float:left;padding-top:10px">
+            {% for book in search_item %}
+                <book class="book" style=";padding-top:10px">
+                    <div style="display: flex;align-items: center;justify-content: center">
+                        <div style="float: left">
+                            <img src="{{ book.cover_url }} " style="max-width: 300px" alt="Book Cover">
+                            <br>
+                            <br>
+                            <br>
+                        </div>
+
+                        <div style="padding-left: 20px;">
+
+                            <h2>{{book.title}}</h2>
+                            <h3 style="float:left">Author(s):
+                             {% for author in book.authors %}
+                                 {{ author.full_name }}, &nbsp </h3>
+                             {% endfor %}
+                            <h3>Published By: {{book.publisher.name}} </h3>
+                            <p style="padding-top: 20px">{{book.description}}</p>
+                            <br>
+                            <br>
+                            <br>
+                        </div>
+                    </div>
+                    <div style="float:right">
+                        {% if reviews|length > 0 and book.id != show_reviews_for_book %}
+                            <button class="btn-general" style="cursor: pointer;" onclick="location.href='{{ book.view_review_url }}'">{{ book.reviews|length }} reviews</button>
+                        {% endif %}
+                        <button class="btn-general" style="cursor: pointer;" onclick="location.href='{{ book.add_review_url }}'">Review</button>
+                    </div>
+                    {% if book.id == show_reviews_for_book %}
+                    <div style="clear:both">
+                        {% for review in book.reviews %}
+                            <p>{{review.review_text}}, by {{review.user_name}}, {{review.timestamp}}</p>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    </book>
+            {% endfor %}
+            {% endif %}
+
+
+            </div>
+    </div>
+
+
+
+
+</main>
+{% endblock %}
